@@ -4,7 +4,7 @@ import com.unpredictableXassistant.A.N.T.I.O.N.Y.X.assistant.dtos.AssistantReque
 import com.unpredictableXassistant.A.N.T.I.O.N.Y.X.assistant.dtos.AssistantResponseDTO;
 import org.springframework.stereotype.Component;
 
-@Component
+//@Component
 public class AssistantMapper
 {
 

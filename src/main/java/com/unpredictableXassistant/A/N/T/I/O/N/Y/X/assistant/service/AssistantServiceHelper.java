@@ -5,5 +5,5 @@ import com.unpredictableXassistant.A.N.T.I.O.N.Y.X.assistant.dtos.AssistantRespo
 
 public interface AssistantServiceHelper
 {
-    AssistantResponseDTO chat(AssistantRequestDTO requestDTO);
+    String chat(String prompt);
 }

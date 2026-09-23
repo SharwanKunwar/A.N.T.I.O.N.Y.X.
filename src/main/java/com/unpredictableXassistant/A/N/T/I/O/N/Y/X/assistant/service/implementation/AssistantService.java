@@ -13,16 +13,16 @@ import org.springframework.stereotype.Service;
 public class AssistantService implements AssistantServiceHelper
 {
     private final ChatClient chatClient;
-    private final AssistantMapper mapper;
+
 
     @Override
-    public AssistantResponseDTO chat(AssistantRequestDTO requestDTO)
+    public String chat(String prompt)
     {
         String output = chatClient.prompt()
-                .user("Reply this in as short as possible : "+requestDTO)
+                .user("Reply this in as short as possible and make sure the feel add dark humor , serious, a better personal assistant : "+prompt)
                 .call()
                 .content();
 
-        return mapper.toResponse(output);
+        return output;
     }
 }

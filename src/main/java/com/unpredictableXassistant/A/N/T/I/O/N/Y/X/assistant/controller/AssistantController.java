@@ -18,8 +18,8 @@ public class AssistantController
     private final AssistantServiceHelper service;
 
     @PostMapping("/chat")
-    public ResponseEntity<AssistantResponseDTO> chat(@RequestBody AssistantRequestDTO requestDTO)
+    public ResponseEntity<String> chat(@RequestBody String prompt)
     {
-        return ResponseEntity.ok(service.chat(requestDTO));
+        return ResponseEntity.ok(service.chat(prompt));
     }
 }

@@ -1,5 +1,155 @@
 # A.N.T.I.O.N.Y.X.
 
+A.N.T.I.O.N.Y.X. is a Spring Boot REST API for sending a prompt to an OpenAI-compatible chat model through Spring AI. The application uses PostgreSQL configuration for persistence-ready development, although no entity or repository has been added yet.
+
+## Technology
+
+- Java 21
+- Spring Boot 4.1.1
+- Spring MVC
+- Spring AI 2.0.1
+- OpenRouter-compatible chat endpoint
+- PostgreSQL and Spring Data JPA
+- Maven Wrapper
+- Lombok
+
+## Requirements
+
+- JDK 21
+- Internet access to the configured AI provider
+- PostgreSQL, if database features are enabled later
+- An OpenRouter or compatible provider API key
+
+Check the installed Java version:
+
+```bash
+java -version
+```
+
+## Configuration
+
+Create a `.env` file in the project root. Do not commit it because it contains secrets.
+
+```dotenv
+DB_URL=jdbc:postgresql://localhost:5432/antionyx
+DB_USERNAME=postgres
+DB_PASSWORD=change-me
+OPENROUTER_API_KEY=your-api-key
+AI_URL=https://openrouter.ai/api/v1
+```
+
+The application loads these values at startup and maps them to the properties in `src/main/resources/application.properties`:
+
+| Variable | Purpose |
+| --- | --- |
+| `DB_URL` | JDBC URL for PostgreSQL |
+| `DB_USERNAME` | PostgreSQL username |
+| `DB_PASSWORD` | PostgreSQL password |
+| `OPENROUTER_API_KEY` | API key used by Spring AI |
+| `AI_URL` | OpenAI-compatible API base URL |
+
+The current model is configured as `moonshotai/kimi-k2`, with a maximum of 1,000 output tokens.
+
+## Run the application
+
+On Linux or macOS:
+
+```bash
+./mvnw spring-boot:run
+```
+
+On Windows:
+
+```bat
+mvnw.cmd spring-boot:run
+```
+
+The default server port is `8080`.
+
+Build and test the project with:
+
+```bash
+./mvnw clean test
+```
+
+## API
+
+### Chat with the assistant
+
+`POST /api/assistant/chat`
+
+Request:
+
+```http
+Content-Type: application/json
+```
+
+```json
+{
+  "message": "Explain dependency injection in one sentence."
+}
+```
+
+Response:
+
+```json
+{
+  "message": "Dependency injection provides an object's dependencies from outside the object."
+}
+```
+
+Example with `curl`:
+
+```bash
+curl -X POST http://localhost:8080/api/assistant/chat \
+  -H 'Content-Type: application/json' \
+  -d '{"message":"Explain dependency injection in one sentence."}'
+```
+
+## Request flow
+
+1. `AssistantController` receives `POST /api/assistant/chat`.
+2. `AssistantService` sends the request to Spring AI's `ChatClient`.
+3. The configured OpenAI-compatible provider generates a response.
+4. `AssistantMapper` wraps the generated text in `AssistantResponseDTO`.
+
+The current service builds the model prompt from `AssistantRequestDTO.toString()`. This means the model receives the DTO representation rather than only the raw `message` value. See the future work section before changing this behavior.
+
+## Project structure
+
+```text
+src/main/java/.../X/
+├── Application.java                 Application entry point and .env loading
+└── assistant/
+    ├── config/AiConfig.java         ChatClient bean configuration
+    ├── controller/                  HTTP endpoints
+    ├── dtos/                        Request and response objects
+    ├── mapper/                      DTO and model-output mapping
+    └── service/                     Assistant service contract and implementation
+```
+
+## Development notes
+
+- `spring.jpa.hibernate.ddl-auto=update` is enabled for development. Use migrations and a safer schema strategy before production deployment.
+- SQL and bound parameter logging are enabled. Disable these logs in environments where queries may contain sensitive data.
+- Request validation is included as a dependency, but the request DTO currently has no validation annotations.
+- There is currently no authentication, rate limiting, conversation persistence, or global error response format.
+- Keep API keys and database credentials in environment variables or a secret manager.
+
+## Future work
+
+- Pass `requestDTO.getMessage()` directly to the model prompt.
+- Add validation for blank or oversized messages.
+- Add controller and service tests for successful and failed AI calls.
+- Add consistent handling for provider timeouts and quota errors.
+- Add persistence entities and repositories when conversation history is needed.
+- Add authentication and request rate limiting before exposing the API publicly.
+- Add database migrations and production-specific configuration.
+
+## Package naming
+
+The Java package is `com.unpredictableXassistant.A.N.T.I.O.N.Y.X`. The dotted project name is preserved in the project identity, while the package path follows Java package naming rules.# A.N.T.I.O.N.Y.X.
+
 A.N.T.I.O.N.Y.X. is a Spring Boot REST service that accepts a chat request and returns a response from an OpenAI-compatible AI provider (configured here for OpenRouter). The project is under active development; use the sections marked **For future work** to keep planned and newly added documentation in one place.
 
 ## Contents
