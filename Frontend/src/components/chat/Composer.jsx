@@ -1,0 +1,5 @@
+import Icon from '../ui/Icon'
+
+export default function Composer({ value, onChange, onSend, busy, inputRef }) {
+  return <div className="composer-area"><div className="composer"><textarea ref={inputRef} rows="1" placeholder="Ask me anything, or tell me what you need…" value={value} onChange={event => onChange(event.target.value)} onKeyDown={event => { if (event.key === 'Enter' && !event.shiftKey) { event.preventDefault(); onSend() } }} /><div className="composer-tools"><div className="input-hint"><Icon name="spark" size={14}/><span>Personal intelligence, at your fingertips</span></div><div className="tool-buttons"><button className="icon-button" title="Voice input" onClick={() => inputRef.current?.focus()}><Icon name="mic" size={17}/></button><button className="send-button" aria-label="Send message" disabled={!value.trim() || busy} onClick={() => onSend()}><Icon name="send" size={16}/></button></div></div></div><div className="composer-foot"><span>ANTIONYX can make mistakes. Use your judgment.</span><span><kbd>↵</kbd> send <kbd>⇧ ↵</kbd> new line</span></div></div>
+}

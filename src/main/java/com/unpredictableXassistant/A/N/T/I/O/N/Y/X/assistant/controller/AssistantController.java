@@ -1,7 +1,5 @@
 package com.unpredictableXassistant.A.N.T.I.O.N.Y.X.assistant.controller;
 
-import com.unpredictableXassistant.A.N.T.I.O.N.Y.X.assistant.dtos.AssistantRequestDTO;
-import com.unpredictableXassistant.A.N.T.I.O.N.Y.X.assistant.dtos.AssistantResponseDTO;
 import com.unpredictableXassistant.A.N.T.I.O.N.Y.X.assistant.service.AssistantServiceHelper;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
