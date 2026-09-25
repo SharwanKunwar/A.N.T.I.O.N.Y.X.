@@ -15,6 +15,7 @@ public class Application
 		System.setProperty("DB_PASSWORD", dotenv.get("DB_PASSWORD"));
 		System.setProperty("OPENROUTER_API_KEY", dotenv.get("OPENROUTER_API_KEY"));
 		System.setProperty("AI_URL", dotenv.get("AI_URL"));
+		System.setProperty("AI_SYSTEM_INSTRUCTION", dotenv.get("AI_SYSTEM_INSTRUCTION"));
 
 		SpringApplication.run(Application.class, args);
 		System.out.println("System is ready to jump.");

@@ -12,7 +12,7 @@ function App() {
   const [draft, setDraft] = useState('')
   const [busy, setBusy] = useState(false)
   const [state, setState] = useState('idle')
-  const [theme, setTheme] = useState(() => localStorage.getItem('antionyx-theme') || 'dark')
+  const [theme, setTheme] = useState(() => localStorage.getItem('antionyx-theme') || 'light')
   const [active, setActive] = useState('New conversation')
   const [copiedMessage, setCopiedMessage] = useState(null)
   const conversationRef = useRef(null)
